@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <popt.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "cncl.h"
 #include "cncldef.h"
