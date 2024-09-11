@@ -11,7 +11,6 @@
 %define _is64 %(if [ `getconf LONG_BIT` = "64" ] ; then  printf "64";  fi)
 
 %define _cupsbindir /usr/lib/cups
-%define _cupsbindir64 /usr/lib64/cups
 
 %define _prefix	/usr/local
 %define _bindir %{_prefix}/bin
@@ -217,8 +216,6 @@ install -c -s -m 755 %{MODEL_NUM}/libs_bin%{_arc}/*.so.* 	${RPM_BUILD_ROOT}%{_li
 mkdir -p ${RPM_BUILD_ROOT}%{_bindir}
 mkdir -p ${RPM_BUILD_ROOT}%{_cupsbindir}/filter
 mkdir -p ${RPM_BUILD_ROOT}%{_cupsbindir}/backend
-mkdir -p ${RPM_BUILD_ROOT}%{_cupsbindir64}/filter
-mkdir -p ${RPM_BUILD_ROOT}%{_cupsbindir64}/backend
 mkdir -p ${RPM_BUILD_ROOT}%{_prefix}/share/cups/model
 mkdir -p ${RPM_BUILD_ROOT}/etc/udev/rules.d/
 
@@ -226,10 +223,6 @@ install -c -m 644 com/ini/cnnet.ini  		${RPM_BUILD_ROOT}%{_libdir}/bjlib
 
 make install DESTDIR=${RPM_BUILD_ROOT}
 install -c -s -m 755 com/libs_bin%{_arc}/*.so.* 	${RPM_BUILD_ROOT}%{_libdir}
-
-install -c -m 755 ${RPM_BUILD_ROOT}%{_cupsbindir}/filter/pstocanonij	${RPM_BUILD_ROOT}%{_cupsbindir64}/filter/pstocanonij
-install -c -m 755 ${RPM_BUILD_ROOT}%{_cupsbindir}/backend/cnijusb	${RPM_BUILD_ROOT}%{_cupsbindir64}/backend/cnijusb
-install -c -m 755 ${RPM_BUILD_ROOT}%{_cupsbindir}/backend/cnijnet	${RPM_BUILD_ROOT}%{_cupsbindir64}/backend/cnijnet
 
 install -c -m 644 etc/*.rules ${RPM_BUILD_ROOT}/etc/udev/rules.d/
 %endif
@@ -265,19 +258,6 @@ fi
 
 %if %{with build_common_package}
 %post -n cnijfilter-common
-if [ -e /usr/lib64/cups/backend/usb ] ; then
-	rm -f /usr/lib/cups/filter/pstocanonij
-	rm -f /usr/lib/cups/backend/cnijusb
-	rm -f /usr/lib/cups/backend/cnijnet
-	rmdir -p --ignore-fail-on-non-empty /usr/lib/cups/filter
-	rmdir -p --ignore-fail-on-non-empty /usr/lib/cups/backend
-elif  [ -e /usr/lib/cups/backend/usb ] ; then
-	rm -f /usr/lib64/cups/filter/pstocanonij
-	rm -f /usr/lib64/cups/backend/cnijusb
-	rm -f /usr/lib64/cups/backend/cnijnet
-	rmdir -p --ignore-fail-on-non-empty /usr/lib64/cups/filter
-	rmdir -p --ignore-fail-on-non-empty /usr/lib64/cups/backend
-fi
 if [ -x /sbin/ldconfig ]; then
 	/sbin/ldconfig
 fi
@@ -335,9 +315,6 @@ fi
 %{_cupsbindir}/filter/pstocanonij
 %{_cupsbindir}/backend/cnijusb
 %{_cupsbindir}/backend/cnijnet
-%{_cupsbindir64}/filter/pstocanonij
-%{_cupsbindir64}/backend/cnijusb
-%{_cupsbindir64}/backend/cnijnet
 %{_bindir}/cngpij
 %{_bindir}/cngpijmnt
 %{_bindir}/cnijnpr
