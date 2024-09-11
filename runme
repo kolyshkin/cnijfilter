@@ -1,0 +1,2 @@
+git archive --prefix=cnijfilter-source-3.80/ -o cnijfilter-source-3.80.tar.gz HEAD
+rpmbuild --define="MODEL mg6300" --define="MODEL_NUM 408" --with build_common_package -tb cnijfilter-source-3.80.tar.gz
