@@ -585,7 +585,7 @@ err01:
 /************************************************/
 /*             get_printer_devid               */
 /************************************************/
-static int get_printer_devid(fdusb)
+static int get_printer_devid(int fdusb)
 {
 	char	devid[1024];
 	char	*ivec = NULL;
