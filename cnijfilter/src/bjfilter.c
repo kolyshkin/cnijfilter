@@ -34,6 +34,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <ctype.h>
 
 #define BJFTEMPFILE "/tmp/bjtmpXXXXXX"
 #define CIFTEMPFILEINPUT "/tmp/ciftmpXXXXXX"
@@ -92,6 +93,9 @@ static short modify_image_form( LPBJFILTERINFO lpbjinfo , int isDuplex, int page
 static short output_blank_page( CNCLPtr , int , int , LPBJF_ROOT );
 static short process_raster_data( LPCIFRASTERINFO , LPBJFILTERINFO , LPBJFLTDEVICE , LPBJF_ROOT );
 static short flush_raster_data(  CNCLPtr , LPBJFILTERINFO , int , LPBJF_ROOT );
+
+short SetExtLevel( LPBJF_MARGIN_INFO, short);
+void bjf_margin_init( LPBJF_MARGIN_INFO );
 
 
 #if DEBUG
