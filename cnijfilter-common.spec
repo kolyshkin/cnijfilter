@@ -3,6 +3,7 @@
 %bcond_with build_common_package
 
 %global _missing_build_ids_terminate_build 0
+%global debug_package %{nil}
 
 %define VERSION 3.80
 %define RELEASE 3
