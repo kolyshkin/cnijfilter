@@ -2,8 +2,10 @@
 %bcond_with fastbuild
 %bcond_with build_common_package
 
+%global _missing_build_ids_terminate_build 0
+
 %define VERSION 3.80
-%define RELEASE 2
+%define RELEASE 3
 
 %define _arc  %(getconf LONG_BIT)
 %define _is64 %(if [ `getconf LONG_BIT` = "64" ] ; then  printf "64";  fi)
@@ -29,7 +31,7 @@ Release: %{RELEASE}
 License: See the LICENSE*.txt file.
 Vendor: CANON INC.
 Group: Applications/Publishing
-Source0: cnijfilter-source-%{version}-%{release}.tar.gz
+Source0: cnijfilter-source-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-root
 #Requires:  cups popt
 Requires: cnijfilter-common >= %{version} cups popt libxml2 gtk2 libtiff libpng
@@ -63,9 +65,9 @@ printers operating under the CUPS (Common UNIX Printing System) environment.
 echo $RPM_BUILD_ROOT
 
 %if %{with fastbuild}
-%setup -T -D -n  cnijfilter-source-%{version}-%{RELEASE}
+%setup -T -D -n  cnijfilter-source-%{version}
 %else
-%setup -q -n  cnijfilter-source-%{version}-%{RELEASE}
+%setup -q -n  cnijfilter-source-%{version}
 %endif
 
 %if ! %{with prepare_fastbuild}
@@ -84,6 +86,8 @@ exit 1
 
 
 %build
+export CFLAGS="-O2 -g -Wno-deprecated-declarations"
+export LDFLAGS=""
 %if %{with prepare_fastbuild}
 
 pushd  ppd
@@ -349,4 +353,7 @@ fi
 %doc LICENSE-cnijfilter-%{VERSION}FR.txt
 %endif
 
-%ChangeLog
+%changelog
+* Wed Sep 11 2024 Kir Kolyshkin <kolyshkin@gmail.com> - 3.80-3
+- forked from https://github.com/willnewton/cnijfilter
+- made it buildable
