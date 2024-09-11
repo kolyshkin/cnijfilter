@@ -26,6 +26,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <libxml/parser.h>
 
 #include "util_parse_dialogstr.h"
