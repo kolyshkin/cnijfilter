@@ -36,6 +36,7 @@
 #include <linux/sysctl.h>
 #include <config.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 #include <dlfcn.h>
 #include "cncl.h"
